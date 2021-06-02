@@ -11,6 +11,7 @@ import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CaptureManager
+import kotlinx.android.synthetic.main.activity_inline_scan.*
 
 class InlineScanActivity : AppCompatActivity() {
     lateinit var captureManager: CaptureManager

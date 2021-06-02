@@ -18,6 +18,7 @@ import com.google.zxing.client.android.BeepManager
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CaptureManager
+import kotlinx.android.synthetic.main.activity_continuous.*
 import java.util.*
 
 class ContinuousActivity : AppCompatActivity() {
