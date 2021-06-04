@@ -4,36 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanActivity">
+    tools:context=".ui.scan.ScanActivity">
+
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scanned Value: "
         android:id="@+id/txtValueLabel"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="350dp"
+        android:text="Scanned Value: "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="{{please scan first}}"
         android:id="@+id/txtValue"
+        android:layout_width="124dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="375dp"
+        android:text="{{please scan first}}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toRightOf="@id/txtValueLabel"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnScan"
-        android:text="Scan"
-        app:layout_constraintTop_toBottomOf="@id/txtValueLabel"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.969" />
 
     <Button
+        android:id="@+id/btnScanMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnScanMe"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="500dp"
         android:text="Scan"
-        app:layout_constraintBottom_toBottomOf="@id/txtValueLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    "@+id/txtValueLabel"
+
+
+        "@+id/txtValue"
+
+
+        "@+id/btnScan"
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

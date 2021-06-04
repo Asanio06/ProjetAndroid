@@ -1,4 +1,4 @@
-package fr.epf.min.projetandroidfood
+package fr.epf.min.projetandroidfood.ui.scan
 
 import androidx.multidex.MultiDexApplication
 

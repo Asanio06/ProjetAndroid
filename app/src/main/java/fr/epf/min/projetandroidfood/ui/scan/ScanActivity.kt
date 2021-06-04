@@ -1,10 +1,11 @@
-package fr.epf.min.projetandroidfood
+package fr.epf.min.projetandroidfood.ui.scan
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
+import fr.epf.min.projetandroidfood.R
 import kotlinx.android.synthetic.main.activity_scan.*
 
 class ScanActivity : AppCompatActivity() {
@@ -40,23 +41,5 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-
-        outState?.putString("scannedResult", scannedResult)
-        if (outState != null) {
-            super.onSaveInstanceState(outState)
-        }
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            super.onRestoreInstanceState(savedInstanceState)
-        }
-
-        savedInstanceState?.let {
-            scannedResult = it.getString(String.toString(),"scannedResult")
-            txtValue.text = scannedResult
-        }
-    }
 
 }

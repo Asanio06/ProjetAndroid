@@ -1,4 +1,4 @@
-package fr.epf.min.projetandroidfood
+package fr.epf.min.projetandroidfood.ui.scan
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,11 +6,7 @@ import android.os.Bundle
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
-import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.google.zxing.ResultPoint
@@ -18,6 +14,7 @@ import com.google.zxing.client.android.BeepManager
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CaptureManager
+import fr.epf.min.projetandroidfood.R
 import kotlinx.android.synthetic.main.activity_continuous.*
 import java.util.*
 
@@ -66,7 +63,9 @@ class ContinuousActivity : AppCompatActivity() {
         btnScanContinuous.setOnClickListener(View.OnClickListener {
             if(!scanContinuousState){
                 scanContinuousState = !scanContinuousState
-                btnScanContinuous.setBackgroundColor(ContextCompat.getColor(InlineScanActivity@this, R.color.colorPrimary))
+                btnScanContinuous.setBackgroundColor(ContextCompat.getColor(InlineScanActivity@this,
+                    R.color.colorPrimary
+                ))
                 txtResultContinuous.text = "scanning..."
                 barcodeView.decodeContinuous(callback)
             } else {
