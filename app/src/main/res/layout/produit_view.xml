@@ -13,8 +13,8 @@
             android:id="@+id/produit_imageview"
             android:layout_margin="8dp"
             tools:src="@tools:sample/avatars"
-            android:layout_width="70dp"
-            android:layout_height="70dp"/>
+            android:layout_width="85dp"
+            android:layout_height="85dp"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -23,11 +23,14 @@
             <TextView
                 android:id="@+id/nom_produit_textview"
                 tools:text="Jus d'orange"
+                android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/marque_produit_textview"
                 tools:text="Joker"
+                android:textSize="13dp"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <LinearLayout
@@ -35,11 +38,11 @@
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/produit_nutricscore_imageview"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="50dp"/>
                 <ImageView
                     android:id="@+id/produit_ecoscore_imageview"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="50dp"/>
             </LinearLayout>
 

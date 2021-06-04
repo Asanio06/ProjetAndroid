@@ -26,6 +26,7 @@ class ProduitAdapter(val produits: List<Produit>) :
 
     override fun onBindViewHolder(holder: ProduitViewHolder, position: Int) {
         val produit = produits[position]
+
         holder.produitView.nom_produit_textview.text =
             "${produit.nom}"
         holder.produitView.marque_produit_textview.text = produit.marque
@@ -38,6 +39,7 @@ class ProduitAdapter(val produits: List<Produit>) :
                 NutriscoreGrade.D -> R.drawable.ic_nutriscore_d
                 NutriscoreGrade.E -> R.drawable.ic_nutriscore_e
                 NutriscoreGrade.UNKNOW -> R.drawable.ic_nutriscore_unknown
+                else -> R.drawable.ic_nutriscore_unknown
             }
         )
 
@@ -49,6 +51,8 @@ class ProduitAdapter(val produits: List<Produit>) :
                 EcoscoreGrade.D -> R.drawable.ic_ecoscore_d
                 EcoscoreGrade.E -> R.drawable.ic_ecoscore_e
                 EcoscoreGrade.UNKNOW -> R.drawable.ic_ecoscore_unknown
+                else -> R.drawable.ic_ecoscore_unknown
+
             }
         )
 

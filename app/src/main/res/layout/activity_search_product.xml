@@ -7,17 +7,7 @@
     android:orientation="vertical"
     android:layout_margin="8dp"
     tools:context=".SearchProductActivity">
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:backgroundTint="@color/purple_500"
-        android:searchIcon="@drawable/ic_baseline_search_24"
-        android:commitIcon="@drawable/ic_baseline_search_24"
-        android:searchHintIcon="@drawable/ic_baseline_search_24"
-        android:closeIcon="@drawable/ic_baseline_close_24"
-        android:goIcon="@drawable/ic_baseline_search_24"
-        />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
