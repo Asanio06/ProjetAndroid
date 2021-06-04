@@ -43,14 +43,18 @@ class ScanActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle?) {
 
         outState?.putString("scannedResult", scannedResult)
-        super.onSaveInstanceState(outState)
+        if (outState != null) {
+            super.onSaveInstanceState(outState)
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null) {
+            super.onRestoreInstanceState(savedInstanceState)
+        }
 
         savedInstanceState?.let {
-            scannedResult = it.getString("scannedResult")
+            scannedResult = it.getString(String.toString(),"scannedResult")
             txtValue.text = scannedResult
         }
     }
