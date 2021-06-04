@@ -66,4 +66,6 @@ class ProduitAdapter(val produits: List<Produit>) :
     override fun getItemCount() = produits.size
 
 
+
+
 }

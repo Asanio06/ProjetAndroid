@@ -17,7 +17,7 @@ enum class NutrientLevel {
 
 @Parcelize
 data class Produit(
-    val nom: String,
+    val nom: String?="none",
     val marque: String?="none",
     val masse: String?="none",
     val image_url: String? = "null",

@@ -1,9 +1,13 @@
 package fr.epf.min.projetandroidfood
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.moshi.Moshi
@@ -40,7 +44,7 @@ class ListProduitActivity : AppCompatActivity() {
             Log.d("EPF", "$service")
             //val result = service.getProduitByCodeBarre("3123349014822")
 
-            val result2 = service.getProduitsBySearch("ch")
+            val result2 = service.getProduitsBySearch()
 
             val produitsApi = result2.products;
 
@@ -68,7 +72,7 @@ class ListProduitActivity : AppCompatActivity() {
                     },
                     it.ingredients_text_fr,
                     it.nutriments,
-                    it.nutrient_levels.mapValues { (nom, level) ->
+                    it.nutrient_levels?.mapValues { (nom, level) ->
                         when (level) {
                             "high" -> NutrientLevel.high
                             "moderate" -> NutrientLevel.moderate
@@ -99,7 +103,28 @@ class ListProduitActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.search_menu,menu)
+        menuInflater.inflate(R.menu.search_menu, menu)
+        val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchItem = menu?.findItem(R.id.app_bar_search)
+        val searchView = searchItem?.actionView as SearchView
+        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchView.setQuery("$query", false)
+                searchItem.collapseActionView()
+                searchView.clearFocus()
+                if (query != null) {
+                    updateSearch(query)
+                }
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -111,7 +136,7 @@ class ListProduitActivity : AppCompatActivity() {
     }*/
 
 
-    private fun synchro() {
+    private fun updateSearch(searchTerms: String) {
 
         runBlocking {
 
@@ -125,14 +150,13 @@ class ListProduitActivity : AppCompatActivity() {
                 .build()
 
             val service = retrofit.create(ProduitService::class.java)
-            Log.d("EPF", "$service")
-            //val result = service.getProduitByCodeBarre("3123349014822")
 
-            val result2 = service.getProduitsBySearch("chocolat")
+            val result2 = service.getProduitsBySearch(searchTerms)
 
             val produitsApi = result2.products;
 
-            produitsApi.map {
+
+            val produitRecup = produitsApi.map {
                 Produit(
                     it.product_name_fr,
                     it.brands,
@@ -156,7 +180,7 @@ class ListProduitActivity : AppCompatActivity() {
                     },
                     it.ingredients_text_fr,
                     it.nutriments,
-                    it.nutrient_levels.mapValues { (nom, level) ->
+                    it.nutrient_levels?.mapValues { (nom, level) ->
                         when (level) {
                             "high" -> NutrientLevel.high
                             "moderate" -> NutrientLevel.moderate
@@ -167,12 +191,19 @@ class ListProduitActivity : AppCompatActivity() {
 
 
                 )
-            }.map {
-                produits.add(it)
+            }
+            if (produitRecup.isNotEmpty()) {
+                produits.clear()
+                produitRecup.map {
+                    produits.add(it)
+                }
             }
 
 
         }
+
+        produits_recyclerview.adapter?.notifyDataSetChanged()
+
 
     }
 }
