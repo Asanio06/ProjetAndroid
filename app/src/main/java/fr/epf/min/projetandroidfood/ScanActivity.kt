@@ -25,11 +25,12 @@ class ScanActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        var result: IntentResult? =
+            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
 
-        if(result != null){
+        if (result != null) {
 
-            if(result.contents != null){
+            if (result.contents != null) {
                 scannedResult = result.contents
                 txtValue.text = scannedResult
             } else {
@@ -40,23 +41,24 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
 
+    override fun onSaveInstanceState(outState: Bundle) {
         outState?.putString("scannedResult", scannedResult)
         if (outState != null) {
             super.onSaveInstanceState(outState)
         }
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         if (savedInstanceState != null) {
             super.onRestoreInstanceState(savedInstanceState)
         }
 
         savedInstanceState?.let {
-            scannedResult = it.getString(String.toString(),"scannedResult")
+            scannedResult = it.getString(String.toString(), "scannedResult")
             txtValue.text = scannedResult
         }
     }
+
 
 }
