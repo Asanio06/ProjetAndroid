@@ -39,6 +39,7 @@ class ProduitAdapter(val produits: List<Produit>) :
                 NutriscoreGrade.D -> R.drawable.ic_nutriscore_d
                 NutriscoreGrade.E -> R.drawable.ic_nutriscore_e
                 NutriscoreGrade.UNKNOW -> R.drawable.ic_nutriscore_unknown
+
                 else -> R.drawable.ic_nutriscore_unknown
             }
         )
@@ -64,8 +65,6 @@ class ProduitAdapter(val produits: List<Produit>) :
     }
 
     override fun getItemCount() = produits.size
-
-
 
 
 }

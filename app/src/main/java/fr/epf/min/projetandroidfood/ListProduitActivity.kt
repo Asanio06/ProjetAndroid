@@ -1,7 +1,9 @@
 package fr.epf.min.projetandroidfood
 
+import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -10,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import fr.epf.min.projetandroidfood.data.ProductDataBase
 import fr.epf.min.projetandroidfood.model.EcoscoreGrade
 import fr.epf.min.projetandroidfood.model.NutrientLevel
 import fr.epf.min.projetandroidfood.model.NutriscoreGrade
@@ -41,15 +45,14 @@ class ListProduitActivity : AppCompatActivity() {
                 .build()
 
             val service = retrofit.create(ProduitService::class.java)
-            Log.d("EPF", "$service")
-            //val result = service.getProduitByCodeBarre("3123349014822")
 
-            val result2 = service.getProduitsBySearch()
+            val result = service.getProduitsBySearch()
 
-            val produitsApi = result2.products;
+            val produitsApi = result.products;
 
             produits = produitsApi.map {
                 Produit(
+                    0,
                     it.product_name_fr,
                     it.brands,
                     "0",
@@ -87,7 +90,10 @@ class ListProduitActivity : AppCompatActivity() {
                 .toMutableList()
 
 
+
         }
+
+
 
 
         produits_recyclerview.layoutManager =
@@ -96,6 +102,7 @@ class ListProduitActivity : AppCompatActivity() {
                 LinearLayoutManager.VERTICAL,
                 false
             )
+
 
         produits_recyclerview.adapter = ProduitAdapter(produits)
 
@@ -136,6 +143,92 @@ class ListProduitActivity : AppCompatActivity() {
     }*/
 
 
+    private fun saveProductInFavorite(produit: Produit) {
+        val database = Room.databaseBuilder(
+            this, ProductDataBase::class.java, "favoriteProduct-db"
+        ).build()
+
+        val productDao = database.getProductDao()
+
+        runBlocking {
+            productDao.addProduct(produit)
+        }
+    }
+
+    private fun saveProductInHistory(produit: Produit) {
+        val database = Room.databaseBuilder(
+            this, ProductDataBase::class.java, "HistoryProduct-db"
+        ).build()
+
+        val productDao = database.getProductDao()
+
+        runBlocking {
+            productDao.addProduct(produit)
+        }
+    }
+    private fun getProductByBarCode(barCode: String) {
+        try {
+            val moshi = Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
+                .build()
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://world.openfoodfacts.org/")
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .build()
+
+            val service = retrofit.create(ProduitService::class.java)
+
+            runBlocking {
+                val result = service.getProduitByBarCode(barCode)
+            }
+        }catch (e:Exception){
+            val dialogBuilder = AlertDialog.Builder(this)
+
+            // set message of alert dialog
+            dialogBuilder.setMessage(e.message)
+                // if the dialog is cancelable
+                .setCancelable(false)
+                // positive button text and action
+                .setPositiveButton("Ok", null)
+            // negative button text and action
+
+
+            // create dialog box
+            val alert = dialogBuilder.create()
+
+            // show alert dialog
+            alert.show()
+            alert.setOnShowListener {
+                val okButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
+                okButton.setOnClickListener {
+                    // dialog won't close by default
+                    alert.dismiss()
+                }
+            }
+        }
+
+
+    }
+
+
+
+    private fun getAllFavoriteProduct(): List<Produit> {
+        val database = Room.databaseBuilder(
+            this, ProductDataBase::class.java, "favoriteProduct-db"
+        ).build()
+
+        val productDao = database.getProductDao()
+        var favoriteProducts: List<Produit>;
+        runBlocking {
+            favoriteProducts = productDao.getAllProduct();
+        }
+
+        return favoriteProducts
+
+    }
+
+
     private fun updateSearch(searchTerms: String) {
 
         runBlocking {
@@ -158,6 +251,7 @@ class ListProduitActivity : AppCompatActivity() {
 
             val produitRecup = produitsApi.map {
                 Produit(
+                    0,
                     it.product_name_fr,
                     it.brands,
                     "0",

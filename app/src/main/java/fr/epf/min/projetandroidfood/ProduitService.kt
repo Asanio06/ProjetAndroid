@@ -15,7 +15,7 @@ interface ProduitService {
     ): GetProduitsResult
 
     @GET("/api/v0/product/{code}.json")
-    suspend fun getProduitByCodeBarre(
+    suspend fun getProduitByBarCode(
         @Path("code") code: String
     ): GetProduitResult
 }

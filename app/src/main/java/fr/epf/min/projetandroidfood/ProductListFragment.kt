@@ -28,7 +28,6 @@ class ProductListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            products = it.getParcelableArrayList(PRODUCTS)
         }
 
         products = ArrayList(Produit.all())
@@ -61,7 +60,7 @@ class ProductListFragment : Fragment() {
         fun newInstance(products: List<Produit>) =
             ProductListFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelableArrayList(PRODUCTS,ArrayList(products))
+
                 }
             }
     }
