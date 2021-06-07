@@ -28,6 +28,7 @@ data class APIResponse(
     val brands: String? = "none",
     val product_name_fr: String? = "none",
     val image_url: String? = "none",
+    val quantity: String? = "none",
     val ingredients_text_fr: String? = "none",
     val nutrient_levels: Map<String, String>? = null,
     val nutriments: Map<String, String>? = null,

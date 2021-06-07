@@ -55,7 +55,7 @@ class ListProduitActivity : AppCompatActivity() {
                     0,
                     it.product_name_fr,
                     it.brands,
-                    "0",
+                    it.quantity,
                     it.image_url,
                     when (it.nutriscore_grade) {
                         "a" -> NutriscoreGrade.A
