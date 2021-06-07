@@ -8,37 +8,65 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.zxing.integration.android.IntentIntegrator
+import fr.epf.min.projetandroidfood.R
 import fr.epf.min.projetandroidfood.databinding.FragmentScannerBinding
+import fr.epf.min.projetandroidfood.ui.scan.ScanActivity
+import kotlinx.android.synthetic.main.activity_scan.*
+import android.content.Intent
+import android.util.Log
+import com.google.zxing.integration.android.IntentResult
+import kotlinx.android.synthetic.main.activity_scan.btnScanMe
+import kotlinx.android.synthetic.main.activity_scan.txtValue
+import kotlinx.android.synthetic.main.fragment_scanner.*
+import kotlinx.android.synthetic.main.fragment_scanner.view.*
+
 
 class ScannerFragment : Fragment() {
 
-    private lateinit var scannerViewModel: ScannerViewModel
-    private var _binding: FragmentScannerBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    var scannedResult: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        scannerViewModel =
-            ViewModelProvider(this).get(ScannerViewModel::class.java)
 
-        _binding = FragmentScannerBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val view: View = inflater.inflate(R.layout.fragment_scanner, container, false)
 
-        val textView: TextView = binding.textScanner
-        scannerViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        view.btnScanFragment.setOnClickListener { view->
+            run {
+                IntentIntegrator.forSupportFragment(this).initiateScan();
+            }
+        }
+
+        return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+
+        var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+
+
+        if (result != null) {
+            if (result.contents != null) {
+                scannedResult = result.contents
+                Log.d("epf_good" , "$scannedResult")
+
+                this.requireView().txtValueFragment.text = scannedResult
+
+
+            } else {
+                this.requireView().txtValueFragment.text = "scan failed"
+
+            }
+
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+
     }
+
 }

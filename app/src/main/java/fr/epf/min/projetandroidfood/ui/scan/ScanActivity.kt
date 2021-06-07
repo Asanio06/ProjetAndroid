@@ -6,7 +6,9 @@ import android.os.Bundle
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import fr.epf.min.projetandroidfood.R
+import fr.epf.min.projetandroidfood.ui.fragment.scanner.ScannerFragment
 import kotlinx.android.synthetic.main.activity_scan.*
+
 
 class ScanActivity : AppCompatActivity() {
 
@@ -22,7 +24,11 @@ class ScanActivity : AppCompatActivity() {
                 IntentIntegrator(this@ScanActivity).initiateScan();
             }
         }
+
+
+
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
@@ -40,6 +46,7 @@ class ScanActivity : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+
 
 
 }
