@@ -90,7 +90,6 @@ class ListProduitActivity : AppCompatActivity() {
                 .toMutableList()
 
 
-
         }
 
 
@@ -166,6 +165,7 @@ class ListProduitActivity : AppCompatActivity() {
             productDao.addProduct(produit)
         }
     }
+
     private fun getProductByBarCode(barCode: String) {
         try {
             val moshi = Moshi.Builder()
@@ -182,7 +182,7 @@ class ListProduitActivity : AppCompatActivity() {
             runBlocking {
                 val result = service.getProduitByBarCode(barCode)
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             val dialogBuilder = AlertDialog.Builder(this)
 
             // set message of alert dialog
@@ -212,7 +212,6 @@ class ListProduitActivity : AppCompatActivity() {
     }
 
 
-
     private fun getAllFavoriteProduct(): List<Produit> {
         val database = Room.databaseBuilder(
             this, ProductDataBase::class.java, "favoriteProduct-db"
@@ -229,7 +228,7 @@ class ListProduitActivity : AppCompatActivity() {
     }
 
 
-    private fun updateSearch(searchTerms: String) {
+    private fun updateSearch(searchTerms: String = "") {
 
         runBlocking {
 
