@@ -1,13 +1,13 @@
-package fr.epf.min.projetandroidfood.ui.home
+package fr.epf.min.projetandroidfood.ui.fragment.favorite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class FavoriteViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is favorite Fragment"
     }
     val text: LiveData<String> = _text
 }

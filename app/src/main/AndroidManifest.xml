@@ -2,30 +2,46 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.epf.min.projetandroidfood">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Nu3grammes"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ProjetAndroidFood"
-        android:usesCleartextTraffic="true" >
-        <activity android:name=".ListProduitActivity">
+        android:theme="@style/Theme.ProjetAndroidFood">
+
+        <activity android:name=".MainActivity2" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER"/>
+    </intent-filter>
+    </activity>
+
+        <activity android:name=".ui.scan.ScanActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchProductActivity">
 
+
+        <activity android:name=".ui.scan.InlineScanActivity"></activity>
+        <activity android:name=".ui.scan.ContinuousActivity"></activity>
+
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".SearchProductActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity2"
-            android:label="@string/title_activity_main2" />
-        <activity android:name=".MainActivity"></activity>
+
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

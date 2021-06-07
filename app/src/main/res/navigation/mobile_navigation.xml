@@ -3,23 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_history">
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="fr.epf.min.projetandroidfood.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:name="fr.epf.min.projetandroidfood.ui.fragment.home.HomeFragment"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_history"
+        android:name="fr.epf.min.projetandroidfood.ui.fragment.history.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="fr.epf.min.projetandroidfood.ui.fragment.favorite.FavoriteFragment"
+        android:label="Favorite"
+        tools:layout="@layout/fragment_favorite" />
+
+    <fragment
+        android:id=    "@+id/navigation_center_focus_weak"
+        android:name="fr.epf.min.projetandroidfood.ui.fragment.scanner.ScannerFragment"
+        android:label="Scanner"
+        tools:layout="@layout/fragment_scanner" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="fr.epf.min.projetandroidfood.ui.fragment.searcher.SearcherFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_searcher" />
+
+    <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="fr.epf.min.projetandroidfood.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:name="fr.epf.min.projetandroidfood.ui.fragment.dashboard.DashboardFragment"
+        android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="fr.epf.min.projetandroidfood.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:name="fr.epf.min.projetandroidfood.ui.fragment.notifications.NotificationsFragment"
+        android:label="Notifications"
         tools:layout="@layout/fragment_notifications" />
+
 </navigation>
