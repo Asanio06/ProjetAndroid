@@ -7,10 +7,12 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import fr.epf.min.projetandroidfood.ProduitService
 import fr.epf.min.projetandroidfood.R
+import fr.epf.min.projetandroidfood.data.ProductDataBase
 import fr.epf.min.projetandroidfood.model.EcoscoreGrade
 import fr.epf.min.projetandroidfood.model.NutrientLevel
 import fr.epf.min.projetandroidfood.model.NutriscoreGrade
@@ -157,6 +159,8 @@ class SearcherFragment : Fragment() {
 
             if (productsSearch.isNotEmpty()) {
                 products.clear()
+                saveProductInFavorite(productsSearch[1])
+                saveProductInHistory(productsSearch[2])
                 productsSearch.map {
                     products.add(it)
                 }
@@ -165,6 +169,30 @@ class SearcherFragment : Fragment() {
         this.requireView().products_recyclerview.adapter?.notifyDataSetChanged()
 
 
+    }
+
+    private fun saveProductInFavorite(produit: Produit) {
+        val database = Room.databaseBuilder(
+            this.requireContext(), ProductDataBase::class.java, "favoriteProduct-db"
+        ).build()
+
+        val productDao = database.getProductDao()
+
+        runBlocking {
+            productDao.addProduct(produit)
+        }
+    }
+
+    private fun saveProductInHistory(produit: Produit) {
+        val database = Room.databaseBuilder(
+            this.requireContext(), ProductDataBase::class.java, "HistoryProduct-db"
+        ).build()
+
+        val productDao = database.getProductDao()
+
+        runBlocking {
+            productDao.addProduct(produit)
+        }
     }
 
 

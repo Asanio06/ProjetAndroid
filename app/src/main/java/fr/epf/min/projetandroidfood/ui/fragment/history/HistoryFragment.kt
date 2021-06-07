@@ -4,42 +4,61 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import fr.epf.min.projetandroidfood.databinding.FragmentHistoryBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
+import fr.epf.min.projetandroidfood.R
+import fr.epf.min.projetandroidfood.data.ProductDataBase
+import fr.epf.min.projetandroidfood.model.Produit
+import fr.epf.min.projetandroidfood.ui.ProduitAdapter
+import kotlinx.android.synthetic.main.fragment_history.view.*
+import kotlinx.coroutines.runBlocking
 
 class HistoryFragment : Fragment() {
 
-    private lateinit var historyViewModel: HistoryViewModel
-    private var _binding: FragmentHistoryBinding? = null
+    lateinit var products: MutableList<Produit>
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        historyViewModel =
-            ViewModelProvider(this).get(HistoryViewModel::class.java)
+        val view: View = inflater.inflate(R.layout.fragment_history, container, false)
 
-        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        view.productsinhistory_recyclerview.layoutManager =
+            LinearLayoutManager(
+                this.context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
 
-        val textView: TextView = binding.textHistory
-        historyViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        runBlocking {
+            products = getAllProductInHistory().toMutableList()
+        }
+        view.productsinhistory_recyclerview.adapter = ProduitAdapter(products)
+
+
+        return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+
+    private fun getAllProductInHistory(): List<Produit> {
+        val database = Room.databaseBuilder(
+            this.requireContext(), ProductDataBase::class.java, "HistoryProduct-db"
+        ).build()
+
+        val productDao = database?.getProductDao()
+        var productsInHistory: List<Produit>;
+        runBlocking {
+            productsInHistory = productDao!!.getAllProduct();
+        }
+
+        return productsInHistory
+
     }
+
+
+
 }
 
