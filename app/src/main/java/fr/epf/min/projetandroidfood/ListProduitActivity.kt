@@ -142,76 +142,12 @@ class ListProduitActivity : AppCompatActivity() {
     }*/
 
 
-    private fun saveProductInFavorite(produit: Produit) {
-        val database = Room.databaseBuilder(
-            this, ProductDataBase::class.java, "favoriteProduct-db"
-        ).build()
-
-        val productDao = database.getProductDao()
-
-        runBlocking {
-            productDao.addProduct(produit)
-        }
-    }
-
-    private fun saveProductInHistory(produit: Produit) {
-        val database = Room.databaseBuilder(
-            this, ProductDataBase::class.java, "HistoryProduct-db"
-        ).build()
-
-        val productDao = database.getProductDao()
-
-        runBlocking {
-            productDao.addProduct(produit)
-        }
-    }
-
-    private fun getProductByBarCode(barCode: String) {
-        try {
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://world.openfoodfacts.org/")
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-
-            val service = retrofit.create(ProduitService::class.java)
-
-            runBlocking {
-                val result = service.getProduitByBarCode(barCode)
-            }
-        } catch (e: Exception) {
-            val dialogBuilder = AlertDialog.Builder(this)
-
-            // set message of alert dialog
-            dialogBuilder.setMessage(e.message)
-                // if the dialog is cancelable
-                .setCancelable(false)
-                // positive button text and action
-                .setPositiveButton("Ok", null)
-            // negative button text and action
 
 
-            // create dialog box
-            val alert = dialogBuilder.create()
-
-            // show alert dialog
-            alert.show()
-            alert.setOnShowListener {
-                val okButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
-                okButton.setOnClickListener {
-                    // dialog won't close by default
-                    alert.dismiss()
-                }
-            }
-        }
 
 
-    }
 
-
+/*
     private fun getAllFavoriteProduct(): List<Produit> {
         val database = Room.databaseBuilder(
             this, ProductDataBase::class.java, "favoriteProduct-db"
@@ -226,7 +162,7 @@ class ListProduitActivity : AppCompatActivity() {
         return favoriteProducts
 
     }
-
+*/
 
     private fun updateSearch(searchTerms: String = "") {
 

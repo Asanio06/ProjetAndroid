@@ -159,8 +159,6 @@ class SearcherFragment : Fragment() {
 
             if (productsSearch.isNotEmpty()) {
                 products.clear()
-                saveProductInFavorite(productsSearch[1])
-                saveProductInHistory(productsSearch[2])
                 productsSearch.map {
                     products.add(it)
                 }
@@ -171,17 +169,6 @@ class SearcherFragment : Fragment() {
 
     }
 
-    private fun saveProductInFavorite(produit: Produit) {
-        val database = Room.databaseBuilder(
-            this.requireContext(), ProductDataBase::class.java, "favoriteProduct-db"
-        ).build()
-
-        val productDao = database.getProductDao()
-
-        runBlocking {
-            productDao.addProduct(produit)
-        }
-    }
 
     private fun saveProductInHistory(produit: Produit) {
         val database = Room.databaseBuilder(

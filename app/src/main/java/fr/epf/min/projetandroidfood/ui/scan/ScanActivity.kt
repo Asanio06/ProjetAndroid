@@ -49,4 +49,7 @@ class ScanActivity : AppCompatActivity() {
 
 
 
+
+
+
 }

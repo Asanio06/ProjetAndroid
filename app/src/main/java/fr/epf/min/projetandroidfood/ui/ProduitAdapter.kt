@@ -1,10 +1,12 @@
 package fr.epf.min.projetandroidfood.ui
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import fr.epf.min.projetandroidfood.ProductDetailsActivity
 import fr.epf.min.projetandroidfood.R
 import fr.epf.min.projetandroidfood.model.EcoscoreGrade
 import fr.epf.min.projetandroidfood.model.NutriscoreGrade
@@ -32,34 +34,23 @@ class ProduitAdapter(val produits: List<Produit>) :
         holder.produitView.marque_produit_textview.text = produit.marque
 
         holder.produitView.produit_nutricscore_imageview.setImageResource(
-            when (produit.nutriscoreGrade) {
-                NutriscoreGrade.A -> R.drawable.ic_nutriscore_a
-                NutriscoreGrade.B -> R.drawable.ic_nutriscore_b
-                NutriscoreGrade.C -> R.drawable.ic_nutriscore_c
-                NutriscoreGrade.D -> R.drawable.ic_nutriscore_d
-                NutriscoreGrade.E -> R.drawable.ic_nutriscore_e
-                NutriscoreGrade.UNKNOW -> R.drawable.ic_nutriscore_unknown
-
-                else -> R.drawable.ic_nutriscore_unknown
-            }
+           produit.getImageFromNutriScoreGrade()
         )
 
         holder.produitView.produit_ecoscore_imageview.setImageResource(
-            when (produit.ecoscoreGrade) {
-                EcoscoreGrade.A -> R.drawable.ic_ecoscore_a
-                EcoscoreGrade.B -> R.drawable.ic_ecoscore_b
-                EcoscoreGrade.C -> R.drawable.ic_ecoscore_c
-                EcoscoreGrade.D -> R.drawable.ic_ecoscore_d
-                EcoscoreGrade.E -> R.drawable.ic_ecoscore_e
-                EcoscoreGrade.UNKNOW -> R.drawable.ic_ecoscore_unknown
-                else -> R.drawable.ic_ecoscore_unknown
-
-            }
+            produit.getImageFromEcoscoreGrade()
         )
 
         Glide.with(holder.produitView)
             .load(produit.image_url)
             .into(holder.produitView.produit_imageview)
+
+        holder.produitView.setOnClickListener{
+            val intent = Intent(it.context,ProductDetailsActivity::class.java)
+            intent.putExtra("product",produit)
+            it.context.startActivity(intent)
+
+        }
 
 
     }
