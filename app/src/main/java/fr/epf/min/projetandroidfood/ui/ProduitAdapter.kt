@@ -31,7 +31,7 @@ class ProduitAdapter(val produits: List<Produit>) :
 
         holder.produitView.nom_produit_textview.text =
             "${produit.nom}"
-        holder.produitView.marque_produit_textview.text = produit.marque
+        holder.produitView.marque_produit_textview.text = "${produit.marque} - ${produit.masse}"
 
         holder.produitView.produit_nutricscore_imageview.setImageResource(
            produit.getImageFromNutriScoreGrade()
