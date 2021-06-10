@@ -14,22 +14,22 @@ class SimpleScannerActivity : BaseScannerActivity(), ZXingScannerView.ResultHand
     private var mScannerView: ZXingScannerView? = null
     public override fun onCreate(state: Bundle?) {
         super.onCreate(state)
-        setContentView(R.layout.activity_simple_scanner)
+        setContentView(fr.epf.min.projetandroidfood.R.layout.activity_simple_scanner)
         setupToolbar()
-        val contentFrame = findViewById<View>(R.id.content_frame) as ViewGroup
+        val contentFrame = findViewById<View>(fr.epf.min.projetandroidfood.R.id.content_frame) as ViewGroup
         mScannerView = ZXingScannerView(this)
         contentFrame.addView(mScannerView)
     }
 
     public override fun onResume() {
         super.onResume()
-        mScannerView.setResultHandler(this)
-        mScannerView.startCamera()
+        mScannerView?.setResultHandler(this)
+        mScannerView?.startCamera()
     }
 
     public override fun onPause() {
         super.onPause()
-        mScannerView.stopCamera()
+        mScannerView?.stopCamera()
     }
 
     override fun handleResult(rawResult: Result) {
@@ -43,6 +43,6 @@ class SimpleScannerActivity : BaseScannerActivity(), ZXingScannerView.ResultHand
         // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
         // * I don't know why this is the case but I don't have the time to figure out.
         val handler = Handler()
-        handler.postDelayed({ mScannerView.resumeCameraPreview(this@SimpleScannerActivity) }, 2000)
+        handler.postDelayed({ mScannerView?.resumeCameraPreview(this@SimpleScannerActivity) }, 2000)
     }
 }
