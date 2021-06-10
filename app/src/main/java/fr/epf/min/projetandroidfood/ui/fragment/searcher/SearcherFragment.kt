@@ -1,5 +1,6 @@
 package fr.epf.min.projetandroidfood.ui.fragment.searcher
 
+import android.app.ProgressDialog
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
@@ -18,15 +19,16 @@ import fr.epf.min.projetandroidfood.model.NutrientLevel
 import fr.epf.min.projetandroidfood.model.NutriscoreGrade
 import fr.epf.min.projetandroidfood.model.Produit
 import fr.epf.min.projetandroidfood.ui.ProduitAdapter
+import kotlinx.android.synthetic.main.fragment_searcher.*
 import kotlinx.android.synthetic.main.fragment_searcher.view.*
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class SearcherFragment : Fragment() {
 
     lateinit var products: MutableList<Produit>
-
+    lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +37,17 @@ class SearcherFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_searcher, container, false)
 
+        progressDialog = ProgressDialog(this.requireContext())
+        progressDialog.show()
+        progressDialog.setContentView(R.layout.progress_dialog)
+        progressDialog.window?.setBackgroundDrawableResource(
+            android.R.color.transparent
+        )
+
+
+
+        products = emptyList<Produit>().toMutableList()
+
         view.products_recyclerview.layoutManager =
             LinearLayoutManager(
                 this.context,
@@ -42,9 +55,18 @@ class SearcherFragment : Fragment() {
                 false
             )
 
-        runBlocking {
+        GlobalScope.launch(Dispatchers.Default) {
             products = getResultOfSearch().toMutableList()
+
+            withContext(Dispatchers.Main) { //switch to main thread
+
+                view.products_recyclerview.adapter = ProduitAdapter(products)
+                progressDialog.dismiss()
+
+            }
+
         }
+
         view.products_recyclerview.adapter = ProduitAdapter(products)
 
         setHasOptionsMenu(true)
@@ -88,70 +110,69 @@ class SearcherFragment : Fragment() {
 
     suspend fun getResultOfSearch(searchTerms: String = ""): List<Produit> {
         var produitRecup: List<Produit>
-        runBlocking {
 
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://world.openfoodfacts.org/")
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://world.openfoodfacts.org/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
 
-            val service = retrofit.create(ProduitService::class.java)
+        val service = retrofit.create(ProduitService::class.java)
 
-            val result2 = service.getProduitsBySearch(searchTerms)
+        val result2 = service.getProduitsBySearch(searchTerms)
 
-            val produitsApi = result2.products;
+        val produitsApi = result2.products;
 
 
-            produitRecup = produitsApi.map {
-                Produit(
-                    0,
-                    it.product_name_fr,
-                    it.brands,
-                    it.quantity,
-                    it.image_url,
-                    when (it.nutriscore_grade) {
-                        "a" -> NutriscoreGrade.A
-                        "b" -> NutriscoreGrade.B
-                        "c" -> NutriscoreGrade.C
-                        "d" -> NutriscoreGrade.D
-                        "e" -> NutriscoreGrade.E
-                        else -> NutriscoreGrade.UNKNOW
-                    },
-                    when (it.ecoscore_grade) {
-                        "a" -> EcoscoreGrade.A
-                        "b" -> EcoscoreGrade.B
-                        "c" -> EcoscoreGrade.C
-                        "d" -> EcoscoreGrade.D
-                        "e" -> EcoscoreGrade.E
-                        else -> EcoscoreGrade.UNKNOW
-                    },
-                    it.ingredients_text_fr,
-                    it.nutriments,
-                    it.nutrient_levels?.mapValues { (nom, level) ->
-                        when (level) {
-                            "high" -> NutrientLevel.high
-                            "moderate" -> NutrientLevel.moderate
-                            "low" -> NutrientLevel.low
-                            else -> NutrientLevel.unknow
-                        }
+        produitRecup = produitsApi.map {
+            Produit(
+                0,
+                it.product_name_fr,
+                it.brands,
+                it.quantity,
+                it.image_url,
+                when (it.nutriscore_grade) {
+                    "a" -> NutriscoreGrade.A
+                    "b" -> NutriscoreGrade.B
+                    "c" -> NutriscoreGrade.C
+                    "d" -> NutriscoreGrade.D
+                    "e" -> NutriscoreGrade.E
+                    else -> NutriscoreGrade.UNKNOW
+                },
+                when (it.ecoscore_grade) {
+                    "a" -> EcoscoreGrade.A
+                    "b" -> EcoscoreGrade.B
+                    "c" -> EcoscoreGrade.C
+                    "d" -> EcoscoreGrade.D
+                    "e" -> EcoscoreGrade.E
+                    else -> EcoscoreGrade.UNKNOW
+                },
+                it.ingredients_text_fr,
+                it.nutriments,
+                it.nutrient_levels?.mapValues { (nom, level) ->
+                    when (level) {
+                        "high" -> NutrientLevel.high
+                        "moderate" -> NutrientLevel.moderate
+                        "low" -> NutrientLevel.low
+                        else -> NutrientLevel.unknow
                     }
+                }
 
 
-                )
-            }
-
-
+            )
         }
+
+
+
 
         return produitRecup;
 
     }
 
-    suspend fun updateSearch(searchTerms: String = "") {
+    private fun updateSearch(searchTerms: String = "") {
 
 
         runBlocking {
@@ -164,7 +185,7 @@ class SearcherFragment : Fragment() {
                 }
             }
         }
-        this.requireView().products_recyclerview.adapter?.notifyDataSetChanged()
+        products_recyclerview.adapter?.notifyDataSetChanged()
 
 
     }

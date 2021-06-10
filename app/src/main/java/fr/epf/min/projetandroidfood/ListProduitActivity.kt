@@ -22,6 +22,7 @@ import fr.epf.min.projetandroidfood.model.NutriscoreGrade
 import fr.epf.min.projetandroidfood.model.Produit
 import fr.epf.min.projetandroidfood.ui.ProduitAdapter
 import kotlinx.android.synthetic.main.activity_list_produit.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.runBlocking
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -33,64 +34,64 @@ class ListProduitActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_produit)
-        runBlocking {
-
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://world.openfoodfacts.org/")
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-
-            val service = retrofit.create(ProduitService::class.java)
-
-            val result = service.getProduitsBySearch()
-
-            val produitsApi = result.products;
-
-            produits = produitsApi.map {
-                Produit(
-                    0,
-                    it.product_name_fr,
-                    it.brands,
-                    it.quantity,
-                    it.image_url,
-                    when (it.nutriscore_grade) {
-                        "a" -> NutriscoreGrade.A
-                        "b" -> NutriscoreGrade.B
-                        "c" -> NutriscoreGrade.C
-                        "d" -> NutriscoreGrade.D
-                        "e" -> NutriscoreGrade.E
-                        else -> NutriscoreGrade.UNKNOW
-                    },
-                    when (it.ecoscore_grade) {
-                        "a" -> EcoscoreGrade.A
-                        "b" -> EcoscoreGrade.B
-                        "c" -> EcoscoreGrade.C
-                        "d" -> EcoscoreGrade.D
-                        "e" -> EcoscoreGrade.E
-                        else -> EcoscoreGrade.UNKNOW
-                    },
-                    it.ingredients_text_fr,
-                    it.nutriments,
-                    it.nutrient_levels?.mapValues { (nom, level) ->
-                        when (level) {
-                            "high" -> NutrientLevel.high
-                            "moderate" -> NutrientLevel.moderate
-                            "low" -> NutrientLevel.low
-                            else -> NutrientLevel.unknow
-                        }
-                    }
 
 
-                )
+runBlocking {
+    val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl("https://world.openfoodfacts.org/")
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
+    val service = retrofit.create(ProduitService::class.java)
+    val result = service.getProduitsBySearch()
+    val produitsApi = result.products;
+
+    produits = produitsApi.map {
+        Produit(
+            0,
+            it.product_name_fr,
+            it.brands,
+            it.quantity,
+            it.image_url,
+            when (it.nutriscore_grade) {
+                "a" -> NutriscoreGrade.A
+                "b" -> NutriscoreGrade.B
+                "c" -> NutriscoreGrade.C
+                "d" -> NutriscoreGrade.D
+                "e" -> NutriscoreGrade.E
+                else -> NutriscoreGrade.UNKNOW
+            },
+            when (it.ecoscore_grade) {
+                "a" -> EcoscoreGrade.A
+                "b" -> EcoscoreGrade.B
+                "c" -> EcoscoreGrade.C
+                "d" -> EcoscoreGrade.D
+                "e" -> EcoscoreGrade.E
+                else -> EcoscoreGrade.UNKNOW
+            },
+            it.ingredients_text_fr,
+            it.nutriments,
+            it.nutrient_levels?.mapValues { (nom, level) ->
+                when (level) {
+                    "high" -> NutrientLevel.high
+                    "moderate" -> NutrientLevel.moderate
+                    "low" -> NutrientLevel.low
+                    else -> NutrientLevel.unknow
+                }
             }
-                .toMutableList()
 
 
-        }
+        )
+    }
+        .toMutableList()
+}
+
+
+
 
 
 
@@ -165,71 +166,71 @@ class ListProduitActivity : AppCompatActivity() {
 */
 
     private fun updateSearch(searchTerms: String = "") {
-
-        runBlocking {
-
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://world.openfoodfacts.org/")
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-
-            val service = retrofit.create(ProduitService::class.java)
-
-            val result2 = service.getProduitsBySearch(searchTerms)
-
-            val produitsApi = result2.products;
+runBlocking {
 
 
-            val produitRecup = produitsApi.map {
-                Produit(
-                    0,
-                    it.product_name_fr,
-                    it.brands,
-                    "0",
-                    it.image_url,
-                    when (it.nutriscore_grade) {
-                        "a" -> NutriscoreGrade.A
-                        "b" -> NutriscoreGrade.B
-                        "c" -> NutriscoreGrade.C
-                        "d" -> NutriscoreGrade.D
-                        "e" -> NutriscoreGrade.E
-                        else -> NutriscoreGrade.UNKNOW
-                    },
-                    when (it.ecoscore_grade) {
-                        "a" -> EcoscoreGrade.A
-                        "b" -> EcoscoreGrade.B
-                        "c" -> EcoscoreGrade.C
-                        "d" -> EcoscoreGrade.D
-                        "e" -> EcoscoreGrade.E
-                        else -> EcoscoreGrade.UNKNOW
-                    },
-                    it.ingredients_text_fr,
-                    it.nutriments,
-                    it.nutrient_levels?.mapValues { (nom, level) ->
-                        when (level) {
-                            "high" -> NutrientLevel.high
-                            "moderate" -> NutrientLevel.moderate
-                            "low" -> NutrientLevel.low
-                            else -> NutrientLevel.unknow
-                        }
-                    }
+    val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl("https://world.openfoodfacts.org/")
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
+
+    val service = retrofit.create(ProduitService::class.java)
+
+    val result2 = service.getProduitsBySearch(searchTerms)
+
+    val produitsApi = result2.products;
 
 
-                )
-            }
-            if (produitRecup.isNotEmpty()) {
-                produits.clear()
-                produitRecup.map {
-                    produits.add(it)
+    val produitRecup = produitsApi.map {
+        Produit(
+            0,
+            it.product_name_fr,
+            it.brands,
+            "0",
+            it.image_url,
+            when (it.nutriscore_grade) {
+                "a" -> NutriscoreGrade.A
+                "b" -> NutriscoreGrade.B
+                "c" -> NutriscoreGrade.C
+                "d" -> NutriscoreGrade.D
+                "e" -> NutriscoreGrade.E
+                else -> NutriscoreGrade.UNKNOW
+            },
+            when (it.ecoscore_grade) {
+                "a" -> EcoscoreGrade.A
+                "b" -> EcoscoreGrade.B
+                "c" -> EcoscoreGrade.C
+                "d" -> EcoscoreGrade.D
+                "e" -> EcoscoreGrade.E
+                else -> EcoscoreGrade.UNKNOW
+            },
+            it.ingredients_text_fr,
+            it.nutriments,
+            it.nutrient_levels?.mapValues { (nom, level) ->
+                when (level) {
+                    "high" -> NutrientLevel.high
+                    "moderate" -> NutrientLevel.moderate
+                    "low" -> NutrientLevel.low
+                    else -> NutrientLevel.unknow
                 }
             }
 
 
+        )
+    }
+    if (produitRecup.isNotEmpty()) {
+        produits.clear()
+        produitRecup.map {
+            produits.add(it)
         }
+    }
+
+
+}
 
         produits_recyclerview.adapter?.notifyDataSetChanged()
 
