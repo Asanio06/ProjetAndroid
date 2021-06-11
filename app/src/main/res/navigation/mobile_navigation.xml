@@ -25,9 +25,9 @@
 
     <fragment
         android:id=    "@+id/navigation_center_focus_weak"
-        android:name="fr.epf.min.projetandroidfood.ui.fragment.scanner.ScannerFragment"
+        android:name="fr.epf.min.projetandroidfood.ui.fragment.scanner.SimpleScannerFragment"
         android:label="Scanner"
-        tools:layout="@layout/fragment_scanner" />
+        tools:layout="@layout/activity_simple_scanner_fragment" />
 
     <fragment
         android:id="@+id/navigation_search"

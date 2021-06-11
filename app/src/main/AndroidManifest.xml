@@ -13,9 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetAndroidFood">
-        <activity android:name=".ProductDetailsActivity">
-
-        </activity>
+        <activity android:name=".ui.fragment.scanner.SimpleScannerFragmentActivity"></activity>
+        <activity android:name=".ui.scan.SimpleScannerActivity" />
+        <activity android:name=".ProductDetailsActivity" />
         <activity android:name=".MainActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,15 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.scan.ScanActivity">
-
-        </activity>
-        <activity android:name=".ui.scan.InlineScanActivity" />
-        <activity android:name=".ui.scan.ContinuousActivity" />
+        <activity android:name=".ui.scan.ScanActivity" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".SearchProductActivity">
-
-        </activity>
+        <activity android:name=".SearchProductActivity" />
         <activity android:name=".MainActivity" />
     </application>
 

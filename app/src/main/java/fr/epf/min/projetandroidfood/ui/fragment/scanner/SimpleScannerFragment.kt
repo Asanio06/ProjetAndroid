@@ -1,19 +1,17 @@
 package fr.epf.min.projetandroidfood.ui.fragment.scanner
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.zxing.integration.android.IntentIntegrator
-import fr.epf.min.projetandroidfood.R
-import android.content.Intent
-import android.util.Log
-import android.view.PointerIcon
 import androidx.room.Room
-import com.google.zxing.integration.android.IntentResult
+import com.google.zxing.Result
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import fr.epf.min.projetandroidfood.ProductDetailsActivity
@@ -23,65 +21,69 @@ import fr.epf.min.projetandroidfood.model.EcoscoreGrade
 import fr.epf.min.projetandroidfood.model.NutrientLevel
 import fr.epf.min.projetandroidfood.model.NutriscoreGrade
 import fr.epf.min.projetandroidfood.model.Produit
-import kotlinx.android.synthetic.main.activity_scan.btnScanMe
-import kotlinx.android.synthetic.main.activity_scan.txtValue
-import kotlinx.android.synthetic.main.fragment_scanner.*
 import kotlinx.android.synthetic.main.fragment_scanner.view.*
 import kotlinx.coroutines.runBlocking
+import me.dm7.barcodescanner.zxing.ZXingScannerView
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 
-class ScannerFragment : Fragment() {
-
-    var scannedResult: String = ""
+class SimpleScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
+    private var mScannerView: ZXingScannerView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
-        val view: View = inflater.inflate(R.layout.fragment_scanner, container, false)
-
-        view.btnScanFragment.setOnClickListener { view ->
-            run {
-                IntentIntegrator.forSupportFragment(this).initiateScan();
-            }
-        }
-
-        return view
+    ): View {
+        mScannerView = ZXingScannerView(getActivity())
+        return mScannerView as ZXingScannerView
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onResume() {
+        super.onResume()
+        mScannerView!!.setResultHandler(this)
+        mScannerView!!.startCamera()
+    }
+
+    override fun handleResult(rawResult: Result) {
 
 
-        var result: IntentResult? =
-            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-
-
-        if (result != null) {
-            if (result.contents != null) {
-                scannedResult = result.contents
+        if ( rawResult!= null) {
+            if (rawResult.text != null) {
+                val scannedResult = rawResult.text.toString()
                 Log.d("epf_good", "$scannedResult")
 
                 val productFromApi = getProductByBarCode(scannedResult)
-                val intent = Intent(this.requireContext(),ProductDetailsActivity::class.java)
-                intent.putExtra("product",productFromApi)
+                val intent = Intent(this.requireContext(), ProductDetailsActivity::class.java)
+                intent.putExtra("product", productFromApi)
                 this.requireContext().startActivity(intent)
 
-                this.requireView().txtValueFragment.text = scannedResult
 
 
             } else {
-                this.requireView().txtValueFragment.text = "scan failed"
+                Toast.makeText(
+                    getActivity(), "Contents = " + rawResult.text +
+                            ", Format = " + rawResult.barcodeFormat.toString(), Toast.LENGTH_SHORT
+                ).show()
+                // Note:
+                // * Wait 2 seconds to resume the preview.
+                // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
+                // * I don't know why this is the case but I don't have the time to figure out.
+
+                val handler = Handler()
+                handler.postDelayed(
+                    { mScannerView!!.resumeCameraPreview(this@SimpleScannerFragment) },
+                    2000
+                )
 
             }
-
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
         }
+    }
 
+    override fun onPause() {
+        super.onPause()
+        mScannerView!!.stopCamera()
     }
 
     private fun getProductByBarCode(barCode: String): Produit {
@@ -183,6 +185,5 @@ class ScannerFragment : Fragment() {
             productDao.addProduct(produit)
         }
     }
-
 
 }
