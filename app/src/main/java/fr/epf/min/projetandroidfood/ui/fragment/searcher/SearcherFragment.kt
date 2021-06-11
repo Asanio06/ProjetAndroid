@@ -89,10 +89,7 @@ class SearcherFragment : Fragment() {
                 searchItem.collapseActionView()
                 searchView.clearFocus()
                 if (query != null) {
-                    runBlocking {
                         updateSearch(query)
-
-                    }
                 }
 
                 return true
@@ -173,19 +170,24 @@ class SearcherFragment : Fragment() {
     }
 
     private fun updateSearch(searchTerms: String = "") {
+        progressDialog.show()
 
-
-        runBlocking {
+        GlobalScope.launch(Dispatchers.Default) {
             val productsSearch = getResultOfSearch(searchTerms);
-
             if (productsSearch.isNotEmpty()) {
                 products.clear()
                 productsSearch.map {
                     products.add(it)
                 }
             }
+            withContext(Dispatchers.Main) { //switch to main thread
+
+                products_recyclerview.adapter?.notifyDataSetChanged()
+                progressDialog.dismiss()
+
+            }
+
         }
-        products_recyclerview.adapter?.notifyDataSetChanged()
 
 
     }
