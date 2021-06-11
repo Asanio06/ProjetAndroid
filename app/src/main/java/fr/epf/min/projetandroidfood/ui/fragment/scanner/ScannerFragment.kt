@@ -70,7 +70,6 @@ class ScannerFragment : Fragment() {
                 intent.putExtra("product",productFromApi)
                 this.requireContext().startActivity(intent)
 
-                this.requireView().txtValueFragment.text = scannedResult
 
 
             } else {

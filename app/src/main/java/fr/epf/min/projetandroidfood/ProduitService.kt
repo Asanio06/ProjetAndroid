@@ -1,7 +1,6 @@
 package fr.epf.min.projetandroidfood
 
 
-import fr.epf.min.projetandroidfood.model.NutriscoreGrade
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -33,5 +32,6 @@ data class APIResponse(
     val nutrient_levels: Map<String, String>? = null,
     val nutriments: Map<String, String>? = null,
     val nutriscore_grade: String? = "unknown",
-    val ecoscore_grade: String? = "unknown"
+    val ecoscore_grade: String? = "unknown",
+    val _id:String?=""
 )

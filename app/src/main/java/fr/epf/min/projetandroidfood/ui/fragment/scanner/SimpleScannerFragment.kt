@@ -55,9 +55,16 @@ class SimpleScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
                 Log.d("epf_good", "$scannedResult")
 
                 val productFromApi = getProductByBarCode(scannedResult)
-                val intent = Intent(this.requireContext(), ProductDetailsActivity::class.java)
-                intent.putExtra("product", productFromApi)
-                this.requireContext().startActivity(intent)
+                if(productFromApi !=null){
+                    val intent = Intent(this.requireContext(), ProductDetailsActivity::class.java)
+                    intent.putExtra("product", productFromApi)
+                    this.requireContext().startActivity(intent)
+                }else{
+                    Toast.makeText(
+                        getActivity(), "Le produit est introuvable", Toast.LENGTH_SHORT
+                    ).show()
+                }
+
 
 
 
