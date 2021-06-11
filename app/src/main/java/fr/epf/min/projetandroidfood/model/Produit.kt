@@ -22,7 +22,7 @@ enum class NutrientLevel {
 
 @Entity(tableName = "produits")
 data class Produit(
-    @field:PrimaryKey(autoGenerate = true) var id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
     val nom: String? = "none",
     val marque: String? = "none",
     val masse: String? = "none",
@@ -32,6 +32,7 @@ data class Produit(
     val ingredientsText: String? = "",
     val nutriments: Map<String, String>? = null,
     val nutrients: Map<String, NutrientLevel>? = null,
+    val codeBarre:String?="0"
 
 
     ) : Serializable {

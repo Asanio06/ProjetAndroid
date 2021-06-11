@@ -33,5 +33,5 @@ data class APIResponse(
     val nutriments: Map<String, String>? = null,
     val nutriscore_grade: String? = "unknown",
     val ecoscore_grade: String? = "unknown",
-    val _id:Int =0
+    val _id:String =""
 )

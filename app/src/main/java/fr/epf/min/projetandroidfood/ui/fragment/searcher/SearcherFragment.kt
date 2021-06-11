@@ -126,7 +126,7 @@ class SearcherFragment : Fragment() {
 
         produitRecup = produitsApi.map {
             Produit(
-                it._id,
+                0,
                 it.product_name_fr,
                 it.brands,
                 it.quantity,
@@ -156,7 +156,8 @@ class SearcherFragment : Fragment() {
                         "low" -> NutrientLevel.low
                         else -> NutrientLevel.unknow
                     }
-                }
+                },
+                it._id
 
 
             )
@@ -195,7 +196,7 @@ class SearcherFragment : Fragment() {
 
     private fun saveProductInHistory(produit: Produit) {
         val database = Room.databaseBuilder(
-            this.requireContext(), ProductDataBase::class.java, "HistoryProduct-db"
+            this.requireContext(), ProductDataBase::class.java, "HistoryProductFinal2-db"
         ).build()
 
         val productDao = database.getProductDao()

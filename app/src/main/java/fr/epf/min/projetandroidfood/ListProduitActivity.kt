@@ -52,7 +52,7 @@ runBlocking {
 
     produits = produitsApi.map {
         Produit(
-            it._id,
+            0,
             it.product_name_fr,
             it.brands,
             it.quantity,
@@ -82,7 +82,8 @@ runBlocking {
                     "low" -> NutrientLevel.low
                     else -> NutrientLevel.unknow
                 }
-            }
+            },
+            it._id
 
 
         )
@@ -187,10 +188,10 @@ runBlocking {
 
     val produitRecup = produitsApi.map {
         Produit(
-            it._id,
+            0,
             it.product_name_fr,
             it.brands,
-            "0",
+            it.quantity,
             it.image_url,
             when (it.nutriscore_grade) {
                 "a" -> NutriscoreGrade.A

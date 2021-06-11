@@ -49,7 +49,7 @@ class FavoriteFragment : Fragment() {
 
     private fun getAllFavoriteProduct(): List<Produit> {
         val database = Room.databaseBuilder(
-            this.requireContext(), ProductDataBase::class.java, "favoriteProduct-db"
+            this.requireContext(), ProductDataBase::class.java, "favoriteProductFinal2-db"
         ).build()
 
         val productDao = database.getProductDao()

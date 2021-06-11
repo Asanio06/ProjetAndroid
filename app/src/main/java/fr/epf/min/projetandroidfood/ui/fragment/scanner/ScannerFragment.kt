@@ -101,7 +101,7 @@ class ScannerFragment : Fragment() {
                 val result = service.getProduitByBarCode(barCode)
                 val productApi = result.product
                 product = Produit(
-                    productApi._id,
+                    0,
                     productApi.product_name_fr,
                     productApi.brands,
                     productApi.quantity,
@@ -173,7 +173,7 @@ class ScannerFragment : Fragment() {
 
     private fun saveProductInHistory(produit: Produit) {
         val database = Room.databaseBuilder(
-            this.requireContext(), ProductDataBase::class.java, "HistoryProduct-db"
+            this.requireContext(), ProductDataBase::class.java, "HistoryProductFinal2-db"
         ).build()
 
         val productDao = database.getProductDao()
