@@ -15,9 +15,11 @@ import fr.epf.min.projetandroidfood.data.ProductDataBase
 import fr.epf.min.projetandroidfood.databinding.FragmentFavoriteBinding
 import fr.epf.min.projetandroidfood.model.Produit
 import fr.epf.min.projetandroidfood.ui.ProduitAdapter
+import kotlinx.android.synthetic.main.fragment_favorite.*
 import kotlinx.android.synthetic.main.fragment_favorite.view.*
 import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.android.synthetic.main.fragment_history.view.productsinhistory_recyclerview
+import kotlinx.android.synthetic.main.fragment_searcher.*
 import kotlinx.coroutines.runBlocking
 
 class FavoriteFragment : Fragment() {
@@ -47,6 +49,13 @@ class FavoriteFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        favoriteproducts_recyclerview.adapter?.notifyDataSetChanged()
+
+    }
+
     private fun getAllFavoriteProduct(): List<Produit> {
         val database = Room.databaseBuilder(
             this.requireContext(), ProductDataBase::class.java, "favoriteProductFinal2-db"
@@ -61,7 +70,6 @@ class FavoriteFragment : Fragment() {
         return favoriteProducts
 
     }
-
 
 
 }

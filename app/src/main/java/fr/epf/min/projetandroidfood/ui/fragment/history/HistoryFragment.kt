@@ -43,6 +43,8 @@ class HistoryFragment : Fragment() {
     }
 
 
+
+
     private fun getAllProductInHistory(): List<Produit> {
         val database = Room.databaseBuilder(
             this.requireContext(), ProductDataBase::class.java, "HistoryProductFinal2-db"

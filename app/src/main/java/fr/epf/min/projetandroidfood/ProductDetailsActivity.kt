@@ -32,13 +32,6 @@ class ProductDetailsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         product = intent.extras?.get("product") as Produit
-
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
         Glide.with(this)
             .load(product.image_url)
             .into(product_image_imageview)
@@ -66,7 +59,10 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         nutriments_recyclerview.adapter = product.nutriments?.let { NutrimentAdapter(it) }
 
+
+
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
