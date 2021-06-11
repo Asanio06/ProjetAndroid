@@ -111,7 +111,7 @@ class SimpleScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
                 val result = service.getProduitByBarCode(barCode)
                 val productApi = result.product
                 product = Produit(
-                    0,
+                    productApi._id,
                     productApi.product_name_fr,
                     productApi.brands,
                     productApi.quantity,

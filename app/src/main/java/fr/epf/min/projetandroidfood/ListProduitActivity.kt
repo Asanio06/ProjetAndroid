@@ -52,7 +52,7 @@ runBlocking {
 
     produits = produitsApi.map {
         Produit(
-            0,
+            it._id,
             it.product_name_fr,
             it.brands,
             it.quantity,
@@ -187,7 +187,7 @@ runBlocking {
 
     val produitRecup = produitsApi.map {
         Produit(
-            0,
+            it._id,
             it.product_name_fr,
             it.brands,
             "0",
