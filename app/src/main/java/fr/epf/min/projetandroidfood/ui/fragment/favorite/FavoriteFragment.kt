@@ -51,7 +51,9 @@ class FavoriteFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
+        runBlocking {
+            products = getAllFavoriteProduct().toMutableList()
+        }
         favoriteproducts_recyclerview.adapter?.notifyDataSetChanged()
 
     }
