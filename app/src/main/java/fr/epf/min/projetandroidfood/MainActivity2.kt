@@ -1,10 +1,10 @@
 package fr.epf.min.projetandroidfood
 
 import android.Manifest
+import android.app.ActionBar
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.epf.min.projetandroidfood.databinding.ActivityMain2Binding
 
 class MainActivity2 : AppCompatActivity() {
@@ -43,6 +44,17 @@ class MainActivity2 : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         checkPermission( Manifest.permission.CAMERA,  CAMERA_PERMISSION_CODE)
+
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (getSupportActionBar() != null) {
+            getSupportActionBar()?.setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar()?.setHomeButtonEnabled(false);
+        }
     }
 
     private fun checkPermission(permission: String, requestCode: Int) {
