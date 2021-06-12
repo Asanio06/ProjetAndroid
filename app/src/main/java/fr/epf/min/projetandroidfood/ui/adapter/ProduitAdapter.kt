@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import fr.epf.min.projetandroidfood.ProductDetailsActivity
 import fr.epf.min.projetandroidfood.R
-import fr.epf.min.projetandroidfood.model.Produit
+import fr.epf.min.projetandroidfood.model.Product
 import kotlinx.android.synthetic.main.produit_view.view.*
 
 
-class ProduitAdapter(val produits: List<Produit>) :
+class ProduitAdapter(val products: List<Product>) :
     RecyclerView.Adapter<ProduitAdapter.ProduitViewHolder>() {
 
     class ProduitViewHolder(val produitView: View) : RecyclerView.ViewHolder(produitView)
@@ -25,7 +25,7 @@ class ProduitAdapter(val produits: List<Produit>) :
     }
 
     override fun onBindViewHolder(holder: ProduitViewHolder, position: Int) {
-        val produit = produits[position]
+        val produit = products[position]
 
         holder.produitView.nom_produit_textview.text =
             "${produit.nom}"
@@ -53,7 +53,7 @@ class ProduitAdapter(val produits: List<Produit>) :
 
     }
 
-    override fun getItemCount() = produits.size
+    override fun getItemCount() = products.size
 
 
 }

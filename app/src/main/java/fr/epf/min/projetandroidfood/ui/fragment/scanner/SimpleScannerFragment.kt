@@ -20,7 +20,7 @@ import fr.epf.min.projetandroidfood.data.ProductDataBase
 import fr.epf.min.projetandroidfood.model.EcoscoreGrade
 import fr.epf.min.projetandroidfood.model.NutrientLevel
 import fr.epf.min.projetandroidfood.model.NutriscoreGrade
-import fr.epf.min.projetandroidfood.model.Produit
+import fr.epf.min.projetandroidfood.model.Product
 import kotlinx.android.synthetic.main.fragment_scanner.view.*
 import kotlinx.coroutines.runBlocking
 import me.dm7.barcodescanner.zxing.ZXingScannerView
@@ -93,9 +93,9 @@ class SimpleScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
         mScannerView!!.stopCamera()
     }
 
-    private fun getProductByBarCode(barCode: String): Produit {
+    private fun getProductByBarCode(barCode: String): Product {
         try {
-            var product: Produit
+            var product: Product
             val moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()
@@ -110,7 +110,7 @@ class SimpleScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
             runBlocking {
                 val result = service.getProduitByBarCode(barCode)
                 val productApi = result.product
-                product = Produit(
+                product = Product(
                     null,
                     productApi.product_name_fr,
                     productApi.brands,
@@ -177,12 +177,12 @@ class SimpleScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
             }
         }
 
-        return Produit(null)
+        return Product(null)
 
 
     }
 
-    private fun saveProductInHistory(produit: Produit) {
+    private fun saveProductInHistory(product: Product) {
         val database = Room.databaseBuilder(
             this.requireContext(), ProductDataBase::class.java, "HistoryProductFinal2-db"
         ).build()
@@ -190,7 +190,7 @@ class SimpleScannerFragment : Fragment(), ZXingScannerView.ResultHandler {
         val productDao = database.getProductDao()
 
         runBlocking {
-            productDao.addProduct(produit)
+            productDao.addProduct(product)
         }
     }
 

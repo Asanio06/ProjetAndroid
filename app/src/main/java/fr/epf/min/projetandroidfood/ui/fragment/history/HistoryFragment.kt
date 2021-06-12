@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import fr.epf.min.projetandroidfood.R
 import fr.epf.min.projetandroidfood.data.ProductDataBase
-import fr.epf.min.projetandroidfood.model.Produit
+import fr.epf.min.projetandroidfood.model.Product
 import fr.epf.min.projetandroidfood.ui.adapter.ProduitAdapter
 import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.coroutines.runBlocking
 
 class HistoryFragment : Fragment() {
 
-    lateinit var products: MutableList<Produit>
+    lateinit var products: MutableList<Product>
 
 
     override fun onCreateView(
@@ -45,13 +45,13 @@ class HistoryFragment : Fragment() {
 
 
 
-    private fun getAllProductInHistory(): List<Produit> {
+    private fun getAllProductInHistory(): List<Product> {
         val database = Room.databaseBuilder(
             this.requireContext(), ProductDataBase::class.java, "HistoryProductFinal2-db"
         ).build()
 
         val productDao = database?.getProductDao()
-        var productsInHistory: List<Produit>;
+        var productsInHistory: List<Product>;
         runBlocking {
             productsInHistory = productDao!!.getAllProduct();
         }

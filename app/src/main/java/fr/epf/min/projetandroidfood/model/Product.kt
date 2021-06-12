@@ -1,11 +1,8 @@
 package fr.epf.min.projetandroidfood.model
 
-import android.os.Parcelable
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import fr.epf.min.projetandroidfood.R
-import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
 enum class NutriscoreGrade {
@@ -21,7 +18,7 @@ enum class NutrientLevel {
 }
 
 @Entity(tableName = "produits")
-data class Produit(
+data class Product(
     @PrimaryKey(autoGenerate = true) val id: Int?,
     val nom: String? = "none",
     val marque: String? = "none",
@@ -38,7 +35,7 @@ data class Produit(
     ) : Serializable {
     companion object {
         fun all(size: Int = 30) = (1..size).map {
-            Produit(
+            Product(
                 null,
                 "nom$it",
                 "marque$it",

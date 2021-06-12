@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import fr.epf.min.projetandroidfood.data.ProductDataBase
-import fr.epf.min.projetandroidfood.model.Produit
+import fr.epf.min.projetandroidfood.model.Product
 import fr.epf.min.projetandroidfood.ui.adapter.NutrientAdapter
 import fr.epf.min.projetandroidfood.ui.adapter.NutrimentAdapter
 import kotlinx.android.synthetic.main.activity_product_details.*
@@ -18,14 +18,14 @@ import kotlinx.coroutines.runBlocking
 
 class ProductDetailsActivity : AppCompatActivity() {
 
-    lateinit var product: Produit
+    lateinit var product: Product
     var favoris: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        product = intent.extras?.get("product") as Produit
+        product = intent.extras?.get("product") as Product
         Glide.with(this)
             .load(product.image_url)
             .into(product_image_imageview)
@@ -115,7 +115,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
 
-    private fun saveProductInFavorite(produit: Produit) {
+    private fun saveProductInFavorite(product: Product) {
         val database = Room.databaseBuilder(
             this, ProductDataBase::class.java, "favoriteProductFinal2-db"
         ).build()
@@ -123,7 +123,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         val productDao = database.getProductDao()
 
         runBlocking {
-            productDao.addProduct(produit)
+            productDao.addProduct(product)
         }
     }
 
@@ -133,7 +133,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         ).build()
 
         val productDao = database.getProductDao()
-        var product: List<Produit>
+        var product: List<Product>
 
         runBlocking {
             product = barCode?.let { productDao.getProduct(it) }!!

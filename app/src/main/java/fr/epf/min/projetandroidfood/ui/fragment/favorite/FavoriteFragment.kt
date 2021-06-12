@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import fr.epf.min.projetandroidfood.R
 import fr.epf.min.projetandroidfood.data.ProductDataBase
-import fr.epf.min.projetandroidfood.model.Produit
+import fr.epf.min.projetandroidfood.model.Product
 import fr.epf.min.projetandroidfood.ui.adapter.ProduitAdapter
 import kotlinx.android.synthetic.main.fragment_favorite.*
 import kotlinx.android.synthetic.main.fragment_favorite.view.*
 import kotlinx.coroutines.*
 
 class FavoriteFragment : Fragment() {
-    lateinit var products: MutableList<Produit>
+    lateinit var products: MutableList<Product>
 
 
     override fun onCreateView(
@@ -33,7 +33,7 @@ class FavoriteFragment : Fragment() {
                 LinearLayoutManager.VERTICAL,
                 false
             )
-        products = emptyList<Produit>().toMutableList()
+        products = emptyList<Product>().toMutableList()
 
 
         GlobalScope.launch(Dispatchers.Default) {
@@ -84,13 +84,13 @@ class FavoriteFragment : Fragment() {
 
     }
 
-    private fun getAllFavoriteProduct(): List<Produit> {
+    private fun getAllFavoriteProduct(): List<Product> {
         val database = Room.databaseBuilder(
             this.requireContext(), ProductDataBase::class.java, "favoriteProductFinal2-db"
         ).build()
 
         val productDao = database.getProductDao()
-        var favoriteProducts: List<Produit>;
+        var favoriteProducts: List<Product>;
         runBlocking {
             favoriteProducts = productDao.getAllProduct();
         }

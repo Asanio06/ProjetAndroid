@@ -8,11 +8,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import fr.epf.min.projetandroidfood.model.NutrientLevel
 import fr.epf.min.projetandroidfood.model.NutriscoreGrade
-import fr.epf.min.projetandroidfood.model.Produit
+import fr.epf.min.projetandroidfood.model.Product
 import java.lang.reflect.Type
 
 
-@Database(entities = [Produit::class], version = 1)
+@Database(entities = [Product::class], version = 1)
 @TypeConverters(ProductConverter::class)
 abstract class ProductDataBase: RoomDatabase() {
 

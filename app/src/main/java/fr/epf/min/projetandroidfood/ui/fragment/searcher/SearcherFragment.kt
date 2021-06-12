@@ -17,7 +17,7 @@ import fr.epf.min.projetandroidfood.data.ProductDataBase
 import fr.epf.min.projetandroidfood.model.EcoscoreGrade
 import fr.epf.min.projetandroidfood.model.NutrientLevel
 import fr.epf.min.projetandroidfood.model.NutriscoreGrade
-import fr.epf.min.projetandroidfood.model.Produit
+import fr.epf.min.projetandroidfood.model.Product
 import fr.epf.min.projetandroidfood.ui.adapter.ProduitAdapter
 import kotlinx.android.synthetic.main.fragment_searcher.*
 import kotlinx.android.synthetic.main.fragment_searcher.view.*
@@ -27,7 +27,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class SearcherFragment : Fragment() {
 
-    lateinit var products: MutableList<Produit>
+    lateinit var products: MutableList<Product>
     lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(
@@ -46,7 +46,7 @@ class SearcherFragment : Fragment() {
 
 
 
-        products = emptyList<Produit>().toMutableList()
+        products = emptyList<Product>().toMutableList()
 
         view.products_recyclerview.layoutManager =
             LinearLayoutManager(
@@ -105,8 +105,8 @@ class SearcherFragment : Fragment() {
     }
 
 
-    suspend fun getResultOfSearch(searchTerms: String = ""): List<Produit> {
-        var produitRecup: List<Produit>
+    suspend fun getResultOfSearch(searchTerms: String = ""): List<Product> {
+        var productRecup: List<Product>
 
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
@@ -124,8 +124,8 @@ class SearcherFragment : Fragment() {
         val produitsApi = result2.products;
 
 
-        produitRecup = produitsApi.map {
-            Produit(
+        productRecup = produitsApi.map {
+            Product(
                 null,
                 it.product_name_fr,
                 it.brands,
@@ -166,7 +166,7 @@ class SearcherFragment : Fragment() {
 
 
 
-        return produitRecup;
+        return productRecup;
 
     }
 
@@ -194,7 +194,7 @@ class SearcherFragment : Fragment() {
     }
 
 
-    private fun saveProductInHistory(produit: Produit) {
+    private fun saveProductInHistory(product: Product) {
         val database = Room.databaseBuilder(
             this.requireContext(), ProductDataBase::class.java, "HistoryProductFinal2-db"
         ).build()
@@ -202,7 +202,7 @@ class SearcherFragment : Fragment() {
         val productDao = database.getProductDao()
 
         runBlocking {
-            productDao.addProduct(produit)
+            productDao.addProduct(product)
         }
     }
 
