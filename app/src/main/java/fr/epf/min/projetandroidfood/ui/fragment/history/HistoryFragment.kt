@@ -35,6 +35,7 @@ class HistoryFragment : Fragment() {
 
         runBlocking {
             products = getAllProductInHistory().toMutableList()
+            products.reverse()
         }
         view.productsinhistory_recyclerview.adapter = ProduitAdapter(products)
 
