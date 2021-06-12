@@ -10,7 +10,7 @@ import androidx.room.Room
 import fr.epf.min.projetandroidfood.R
 import fr.epf.min.projetandroidfood.data.ProductDataBase
 import fr.epf.min.projetandroidfood.model.Produit
-import fr.epf.min.projetandroidfood.ui.ProduitAdapter
+import fr.epf.min.projetandroidfood.ui.adapter.ProduitAdapter
 import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.coroutines.runBlocking
 

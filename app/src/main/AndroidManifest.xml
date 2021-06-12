@@ -16,15 +16,13 @@
         <activity android:name=".ui.fragment.scanner.SimpleScannerFragmentActivity"></activity>
         <activity android:name=".ui.scan.SimpleScannerActivity" />
         <activity android:name=".ProductDetailsActivity" />
-        <activity android:name=".MainActivity2">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

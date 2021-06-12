@@ -1,4 +1,4 @@
-package fr.epf.min.projetandroidfood.ui
+package fr.epf.min.projetandroidfood.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +16,7 @@ class NutrientAdapter(val nutrients: Map<String, NutrientLevel>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ):NutrientViewHolder {
+    ): NutrientViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val view =
             inflater.inflate(R.layout.nutrient_view, parent, false)

@@ -1,4 +1,4 @@
-package fr.epf.min.projetandroidfood.ui
+package fr.epf.min.projetandroidfood.ui.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import fr.epf.min.projetandroidfood.ProductDetailsActivity
 import fr.epf.min.projetandroidfood.R
-import fr.epf.min.projetandroidfood.model.EcoscoreGrade
-import fr.epf.min.projetandroidfood.model.NutriscoreGrade
 import fr.epf.min.projetandroidfood.model.Produit
 import kotlinx.android.synthetic.main.produit_view.view.*
 

@@ -5,22 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import fr.epf.min.projetandroidfood.R
 import fr.epf.min.projetandroidfood.data.ProductDataBase
-import fr.epf.min.projetandroidfood.databinding.FragmentFavoriteBinding
 import fr.epf.min.projetandroidfood.model.Produit
-import fr.epf.min.projetandroidfood.ui.ProduitAdapter
+import fr.epf.min.projetandroidfood.ui.adapter.ProduitAdapter
 import kotlinx.android.synthetic.main.fragment_favorite.*
 import kotlinx.android.synthetic.main.fragment_favorite.view.*
-import kotlinx.android.synthetic.main.fragment_history.view.*
-import kotlinx.android.synthetic.main.fragment_history.view.productsinhistory_recyclerview
-import kotlinx.android.synthetic.main.fragment_searcher.*
 import kotlinx.coroutines.*
 
 class FavoriteFragment : Fragment() {

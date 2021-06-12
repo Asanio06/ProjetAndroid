@@ -5,11 +5,6 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_history">
 
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="fr.epf.min.projetandroidfood.ui.fragment.home.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_history"
@@ -34,17 +29,5 @@
         android:name="fr.epf.min.projetandroidfood.ui.fragment.searcher.SearcherFragment"
         android:label="Search"
         tools:layout="@layout/fragment_searcher" />
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="fr.epf.min.projetandroidfood.ui.fragment.dashboard.DashboardFragment"
-        android:label="Dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="fr.epf.min.projetandroidfood.ui.fragment.notifications.NotificationsFragment"
-        android:label="Notifications"
-        tools:layout="@layout/fragment_notifications" />
 
 </navigation>

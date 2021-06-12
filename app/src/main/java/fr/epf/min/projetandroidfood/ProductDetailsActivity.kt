@@ -1,23 +1,17 @@
 package fr.epf.min.projetandroidfood
 
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import fr.epf.min.projetandroidfood.data.ProductDataBase
 import fr.epf.min.projetandroidfood.model.Produit
-import fr.epf.min.projetandroidfood.ui.NutrientAdapter
-import fr.epf.min.projetandroidfood.ui.NutrimentAdapter
+import fr.epf.min.projetandroidfood.ui.adapter.NutrientAdapter
+import fr.epf.min.projetandroidfood.ui.adapter.NutrimentAdapter
 import kotlinx.android.synthetic.main.activity_product_details.*
 import kotlinx.coroutines.runBlocking
 

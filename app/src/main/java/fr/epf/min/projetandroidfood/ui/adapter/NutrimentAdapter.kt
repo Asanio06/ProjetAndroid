@@ -1,11 +1,10 @@
-package fr.epf.min.projetandroidfood.ui
+package fr.epf.min.projetandroidfood.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.epf.min.projetandroidfood.R
-import kotlinx.android.synthetic.main.nutrient_view.view.*
 import kotlinx.android.synthetic.main.nutriment_view.view.*
 
 class NutrimentAdapter(val nutriments: Map<String, String>) :

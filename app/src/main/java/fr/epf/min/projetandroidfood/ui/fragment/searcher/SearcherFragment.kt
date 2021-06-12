@@ -18,7 +18,7 @@ import fr.epf.min.projetandroidfood.model.EcoscoreGrade
 import fr.epf.min.projetandroidfood.model.NutrientLevel
 import fr.epf.min.projetandroidfood.model.NutriscoreGrade
 import fr.epf.min.projetandroidfood.model.Produit
-import fr.epf.min.projetandroidfood.ui.ProduitAdapter
+import fr.epf.min.projetandroidfood.ui.adapter.ProduitAdapter
 import kotlinx.android.synthetic.main.fragment_searcher.*
 import kotlinx.android.synthetic.main.fragment_searcher.view.*
 import kotlinx.coroutines.*
