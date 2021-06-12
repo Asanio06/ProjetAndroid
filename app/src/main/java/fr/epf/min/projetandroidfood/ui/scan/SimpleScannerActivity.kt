@@ -1,25 +1,46 @@
 package fr.epf.min.projetandroidfood.ui.scan
 
+import android.Manifest
 import android.R
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.zxing.Result
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
+import kotlinx.android.synthetic.main.activity_scan.*
+import kotlinx.android.synthetic.main.activity_simple_scanner.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 
 class SimpleScannerActivity : BaseScannerActivity(), ZXingScannerView.ResultHandler {
+
+
+
+
     private var mScannerView: ZXingScannerView? = null
-    public override fun onCreate(state: Bundle?) {
-        super.onCreate(state)
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(fr.epf.min.projetandroidfood.R.layout.activity_simple_scanner)
         setupToolbar()
+
         val contentFrame = findViewById<View>(fr.epf.min.projetandroidfood.R.id.content_frame) as ViewGroup
         mScannerView = ZXingScannerView(this)
         contentFrame.addView(mScannerView)
+
+
+
     }
+
+
 
     public override fun onResume() {
         super.onResume()
@@ -45,4 +66,6 @@ class SimpleScannerActivity : BaseScannerActivity(), ZXingScannerView.ResultHand
         val handler = Handler()
         handler.postDelayed({ mScannerView?.resumeCameraPreview(this@SimpleScannerActivity) }, 2000)
     }
+
+
 }
