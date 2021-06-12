@@ -126,7 +126,7 @@ class SearcherFragment : Fragment() {
 
         produitRecup = produitsApi.map {
             Produit(
-                0,
+                null,
                 it.product_name_fr,
                 it.brands,
                 it.quantity,

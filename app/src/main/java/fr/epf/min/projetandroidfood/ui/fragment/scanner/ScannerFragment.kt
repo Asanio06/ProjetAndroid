@@ -101,7 +101,7 @@ class ScannerFragment : Fragment() {
                 val result = service.getProduitByBarCode(barCode)
                 val productApi = result.product
                 product = Produit(
-                    0,
+                    null,
                     productApi.product_name_fr,
                     productApi.brands,
                     productApi.quantity,
@@ -166,7 +166,7 @@ class ScannerFragment : Fragment() {
             }
         }
 
-        return Produit(0)
+        return Produit(null)
 
 
     }

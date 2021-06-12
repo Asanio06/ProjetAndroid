@@ -1,6 +1,7 @@
 package fr.epf.min.projetandroidfood.ui.fragment.favorite
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_favorite.view.*
 import kotlinx.android.synthetic.main.fragment_history.view.*
 import kotlinx.android.synthetic.main.fragment_history.view.productsinhistory_recyclerview
 import kotlinx.android.synthetic.main.fragment_searcher.*
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class FavoriteFragment : Fragment() {
     lateinit var products: MutableList<Produit>
@@ -39,22 +40,56 @@ class FavoriteFragment : Fragment() {
                 LinearLayoutManager.VERTICAL,
                 false
             )
+        products = emptyList<Produit>().toMutableList()
 
-        runBlocking {
+
+        GlobalScope.launch(Dispatchers.Default) {
             products = getAllFavoriteProduct().toMutableList()
+
+            withContext(Dispatchers.Main) {
+                view.favoriteproducts_recyclerview.adapter = ProduitAdapter(products)
+
+            }
         }
+
         view.favoriteproducts_recyclerview.adapter = ProduitAdapter(products)
+
+
 
 
         return view
     }
 
+    override fun onStart() {
+        super.onStart()
+
+    }
     override fun onResume() {
         super.onResume()
-        runBlocking {
-            products = getAllFavoriteProduct().toMutableList()
-        }
+      products.clear()
+
         favoriteproducts_recyclerview.adapter?.notifyDataSetChanged()
+
+        GlobalScope.launch(Dispatchers.Default) {
+
+            val favoriteProducts = getAllFavoriteProduct()
+            if (favoriteProducts.isNotEmpty()) {
+                products.clear()
+                favoriteProducts.map {
+                    products.add(it)
+                }
+
+            }
+            withContext(Dispatchers.Main) { //switch to main thread
+
+                favoriteproducts_recyclerview.adapter?.notifyDataSetChanged()
+                Log.d("EPF","ON RESUME")
+
+            }
+
+        }
+
+
 
     }
 

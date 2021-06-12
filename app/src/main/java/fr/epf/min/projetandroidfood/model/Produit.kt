@@ -39,7 +39,7 @@ data class Produit(
     companion object {
         fun all(size: Int = 30) = (1..size).map {
             Produit(
-                0,
+                null,
                 "nom$it",
                 "marque$it",
                 "80g",
