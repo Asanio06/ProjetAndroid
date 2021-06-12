@@ -23,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.scan.ScanActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".SearchProductActivity" />
         <activity android:name=".MainActivity" />
